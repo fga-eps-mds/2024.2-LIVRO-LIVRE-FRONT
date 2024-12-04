@@ -1,0 +1,44 @@
+.button{
+    background-color: #037030;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    width: 360px;
+    height: 66px;
+    border-radius: 8px;
+}
+
+a{
+    color: #037030;
+}
+
+p{
+    color: #0A3063;
+    font-size: 16px;    
+}
+
+h3{
+    color: #0A3063;
+    font: bold;
+    font-size: 22px;
+}
+
+div{
+    text-align: center;
+    width: 360px;
+    background-color: white;
+}
+
+input{
+    height: 60px;
+    width: 360px;
+    margin-top: 20px;
+    border-radius: 8px;
+    color: #0A3063;
+    border-color: #BEBEBE;
+    background-color: white;
+    font-size: 16px;
+}
+
