@@ -1,5 +1,10 @@
-.button{
-    background-color: #037030;
+:root {
+    --primary-color: #3679FD;
+    --secondary-color: #037030;
+}
+
+.botaoEntrar {
+    background-color: var(--secondary-color);
     border: none;
     color: white;
     text-align: center;
@@ -8,37 +13,95 @@
     width: 360px;
     height: 66px;
     border-radius: 8px;
+    margin-top: 20px;
 }
 
-a{
-    color: #037030;
+button:focus {
+    outline: none;
 }
 
-p{
-    color: #0A3063;
-    font-size: 16px;    
+a {
+    color: var(--secondary-color);
 }
 
-h3{
-    color: #0A3063;
-    font: bold;
-    font-size: 22px;
+p {
+    color: var(--primary-color);
+    font-size: 16px;
 }
 
-div{
+.textos p{
+    text-align: left;
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.finals{
+    text-align: center;
+}
+
+.container{
     text-align: center;
     width: 360px;
     background-color: white;
 }
 
-input{
+.campos{
+    margin-top:30px;
+}
+
+input {
     height: 60px;
     width: 360px;
-    margin-top: 20px;
-    border-radius: 8px;
-    color: #0A3063;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    color: var(--primary-color);
     border-color: #BEBEBE;
     background-color: white;
     font-size: 16px;
+    padding: 2px 0px 0px 40px;
+    box-sizing: border-box;
 }
 
+input::placeholder {
+    color: var(--primary-color);  /* Altere para a cor desejada */
+    font-size: 16px;  /* Se necessário, ajuste o tamanho da fonte */
+}
+
+.inputSpaces {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    color: #3679FD;
+}
+
+.icons {
+    position: absolute;
+    width:25px; 
+    height: 25px;
+    margin-right: 10px;
+    left: 10px;
+    pointer-events: none;
+}
+
+.input-button {
+    position: absolute;
+    right: 10px; /* Distância do lado direito */
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.button-icon {
+    width: 25px; 
+    height: 25px;
+}
+
+.line {
+    border-bottom: 1px solid #ccc; /* Linha fina de cor cinza */
+    margin-top: 20px; /* Espaço acima da linha */
+}
