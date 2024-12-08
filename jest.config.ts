@@ -17,4 +17,7 @@ export default {
     ],
   ],
   testMatch: ['<rootDir>/test/**/*.(test|spec).ts?(x)'], 
+  transform: {
+    "^.+\\.[t|j]sx?$": "babel-jest",
+  },
 };
