@@ -12,6 +12,8 @@ import Loans from "./pages/Loans"
 import { Toaster } from "./components/ui/toaster"
 import PrivateRoute from './PrivateRoute';
 import SignIn from "./pages/SignIn"
+import RecoverPassword from "./pages/RecoverPassword"
+import ChangePassword from "./pages/ChangePassword"
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/login" element={<SignIn />} />
             <Route path="/cadastro" element={<SignUp />} />
+            <Route path="/recuperar-senha" element={<RecoverPassword />} />
+            <Route path="/alterar-senha" element={<ChangePassword />} />
             <Route path="/inicio" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/perfil" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="/perfil/editar" element={<PrivateRoute><ProfileEdit /></PrivateRoute>} />

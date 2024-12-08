@@ -34,6 +34,8 @@ type AuthContextType = {
   signUp: (userToSignUp: SignUpParams) => Promise<boolean>;
   signIn: (userToSignIn: SignInParams) => Promise<boolean>;
   editProfile: (id: string, profileToEdit: EditProfileParams) => Promise<boolean>;
+  recoverPassword: (email: string) => Promise<boolean>;
+  changePassword: (password: string, token: string) => Promise<boolean>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -43,6 +45,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     signUp: authSignUp,
     signIn: authSignIn,
     editProfile: authEditProfile,
+    recoverPassword: authRecoverPassword,
+    changePassword: authChangePassword,
   } = useApi();
 
   const localToken =
@@ -87,6 +91,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return true;
   }
 
+  async function recoverPassword(email: string): Promise<boolean> {
+    const { data } = await authRecoverPassword(email);
+    if (data.id) {
+      toaster.create({
+        title: 'E-mail enviado para recuperação de senha!',
+        type: 'success',
+      })
+      return true;
+    };
+    toaster.create({
+      title: 'Erro ao requisitar recuperação de senha',
+      description: 'Verifique os campos e tente novamente.',
+      type: 'error',
+    })
+    return false;
+  }
+
+  async function changePassword(password: string, token: string): Promise<boolean> {
+    const { data } = await authChangePassword(password, token);
+    if (data.id) {
+      toaster.create({
+        title: 'Senha alterada com sucesso! Você será redirecionado para o login...',
+        type: 'success',
+      })
+      return true;
+    };
+    toaster.create({
+      title: 'Erro ao alterar a senha',
+      description: 'Verifique os campos e tente novamente.',
+      type: 'error',
+    })
+    return false;
+  }
+
   async function editProfile(id: string, profileToEdit: EditProfileParams): Promise<boolean> {
     const { data } = await authEditProfile(id, profileToEdit);
     if (data.id) {
@@ -120,6 +158,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         signUp,
         editProfile,
         signIn,
+        recoverPassword,
+        changePassword,
       }}
     >
       {children}
