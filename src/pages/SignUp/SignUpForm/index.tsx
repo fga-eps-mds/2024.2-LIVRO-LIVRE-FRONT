@@ -97,7 +97,7 @@ function SignUpForm() {
             />
           </Field>
           <Field invalid={!!errors.passwordConfirmation} errorText={errors.passwordConfirmation?.message}>
-            <Input
+            <PasswordInput
               size={'2xl'}
               placeholder={'Confirmar senha'}
               {...register('passwordConfirmation', { required: "Campo obrigatório." })}
