@@ -13,6 +13,11 @@ interface SignUpParams {
   password: string;
 }
 
+interface SignInParams {
+  email: string;
+  password: string;
+}
+
 interface EditProfileParams {
   firstName: string;
   lastName: string;
@@ -27,13 +32,18 @@ type AuthContextType = {
   token: string | null;
   signOut: () => void;
   signUp: (userToSignUp: SignUpParams) => Promise<boolean>;
+  signIn: (userToSignIn: SignInParams) => Promise<boolean>;
   editProfile: (id: string, profileToEdit: EditProfileParams) => Promise<boolean>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { signUp: authSignUp, editProfile: authEditProfile } = useApi();
+  const {
+    signUp: authSignUp,
+    signIn: authSignIn,
+    editProfile: authEditProfile,
+  } = useApi();
 
   const localToken =
     typeof window !== 'undefined'
@@ -48,6 +58,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (!data.accessToken) {
       toaster.create({
         title: 'Erro ao criar conta',
+        description: 'Verifique os campos e tente novamente.',
+        type: 'error',
+      })
+      return false;
+    };
+    setToken(data.accessToken);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@livrolivre:token', data.accessToken);
+    }
+    return true;
+  }
+
+  async function signIn(userToSignIn: SignInParams): Promise<boolean> {
+    const { data } = await authSignIn(userToSignIn);
+    if (!data.accessToken) {
+      toaster.create({
+        title: 'Erro ao realizar login',
         description: 'Verifique os campos e tente novamente.',
         type: 'error',
       })
@@ -92,6 +119,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         signOut,
         signUp,
         editProfile,
+        signIn,
       }}
     >
       {children}
