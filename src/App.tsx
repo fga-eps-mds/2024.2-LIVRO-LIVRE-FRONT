@@ -11,6 +11,7 @@ import Warnings from "./pages/Warnings"
 import Loans from "./pages/Loans"
 import { Toaster } from "./components/ui/toaster"
 import PrivateRoute from './PrivateRoute';
+import SignIn from "./pages/SignIn"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="*" element={<NotFound />} />
+            <Route path="/login" element={<SignIn />} />
             <Route path="/cadastro" element={<SignUp />} />
             <Route path="/inicio" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/perfil" element={<PrivateRoute><Profile /></PrivateRoute>} />

@@ -57,6 +57,20 @@ const useApi = () => {
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
       });
     },
+    signIn: (data: {
+      email: string;
+      password: string
+    }): Promise<{ data: {
+      accessToken: string;
+      refreshToken: string;
+    } }> => {
+      return new Promise((resolve) => {
+        api
+          .post('/auth/signin', data)
+          .then((res) => resolve(res))
+          .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
+      });
+    },
     editProfile: async (id: string, data: {
       firstName: string;
       lastName: string;

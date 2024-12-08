@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }: { children: any }) => {
   
   useEffect(() => {
     if (token) return;
-    navigate('/cadastro');
+    navigate('/login');
   })
 
   return children;
