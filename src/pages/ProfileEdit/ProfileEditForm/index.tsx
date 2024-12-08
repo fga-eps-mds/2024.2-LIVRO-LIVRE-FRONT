@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
-import { useNavigate } from 'react-router';
 import { Input, Stack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { PasswordInput } from '../../../components/ui/password-input';
 import { Button } from '../../../components/ui/button';
+import useApi from '../../../hooks/useApi';
 import { Field } from '../../../components/ui/field';
 
 interface FormValues {
@@ -12,38 +12,52 @@ interface FormValues {
   lastName: string;
   email: string;
   phone: string;
-  password: string;
-  passwordConfirmation: string;
+  oldPassword?: string;
+  newPassword?: string;
+  newPasswordConfirmation?: string;
 }
 
 function SignUpForm() {
+  const [userId, setUserId] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate  = useNavigate();
 
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors, isValid },
   } = useForm<FormValues>();
 
-  const { signUp, token } = useAuth();
+  const { editProfile, token } = useAuth();
+  const { getProfile } = useApi();
+
+  const getUserData = async () => {
+    if (!token) return;
+    const { data } = await getProfile(token);
+    setValue('firstName', data.firstName);
+    setValue('lastName', data.lastName);
+    setValue('email', data.email);
+    setValue('phone', data.phone);
+    setUserId(data.id)
+  }
+
+  useEffect(() => {
+    getUserData();
+  }, [])
 
   const onSubmit = handleSubmit(async (data: FormValues) => {
     setLoading(true);
-    await signUp({
+    await editProfile(userId, {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       phone: data.phone,
-      password: data.password,
+      newPassword: data.newPassword,
+      oldPassword: data.oldPassword,
     });
     setLoading(false);
   })
-
-  useEffect(() => {
-    if (!token) return;
-    navigate('/inicio');
-  }, [token])
 
   return (
     <form onSubmit={onSubmit}>
@@ -89,18 +103,24 @@ function SignUpForm() {
               })}
             />
           </Field>
-          <Field invalid={!!errors.password} errorText={errors.password?.message}>
+          <PasswordInput
+            size={'2xl'}
+            placeholder={'Senha atual'}
+            {...register('oldPassword', { required: false })}
+          />
+          <PasswordInput
+            size={'2xl'}
+            placeholder={'Senha nova'}
+            {...register('newPassword', { required: watch('oldPassword') !== '' })}
+          />
+          <Field invalid={!!errors.newPasswordConfirmation} errorText={errors.newPasswordConfirmation?.message}>
             <PasswordInput
               size={'2xl'}
-              placeholder={'Senha'}
-              {...register('password', { required: "Campo obrigatório." })}
-            />
-          </Field>
-          <Field invalid={!!errors.passwordConfirmation} errorText={errors.passwordConfirmation?.message}>
-            <Input
-              size={'2xl'}
-              placeholder={'Confirmar senha'}
-              {...register('passwordConfirmation', { required: "Campo obrigatório." })}
+              placeholder={'Confirmar senha nova'}
+              {...register('newPasswordConfirmation', {
+                required: watch('newPassword') !== '',
+                validate: value => value === watch('newPassword') || 'As senhas não coincidem.',
+              })}
             />
           </Field>
         </Stack>
@@ -113,7 +133,7 @@ function SignUpForm() {
           fontWeight={'semibold'}
           disabled={!isValid}
         >
-          cadastrar
+          editar
         </Button>
       </Stack>
     </form>

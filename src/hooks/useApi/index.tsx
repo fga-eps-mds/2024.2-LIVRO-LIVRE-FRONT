@@ -15,10 +15,8 @@ const createApiInstance = (url: string) => {
 const getDefaultErrorUseAPIMessage = (err: any) => {
   return {
     error: true,
-    ...err?.toJSON?.call(),
     ...err?.response,
     ...err?.response?.data,
-    ...err?.data,
   };
 };
 
@@ -30,6 +28,18 @@ const useApi = () => {
   );
 
   return {
+    getProfile: (token: string): Promise<{ data: User }> => {
+      return new Promise((resolve) => {
+        api
+          .get('/auth/profile', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          })
+          .then((res) => resolve(res))
+          .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
+      });
+    },
     signUp: (data: {
       firstName: string;
       lastName: string;
@@ -43,6 +53,33 @@ const useApi = () => {
       return new Promise((resolve) => {
         api
           .post('/auth/signup', data)
+          .then((res) => resolve(res))
+          .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
+      });
+    },
+    editProfile: async (id: string, data: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      phone: string;
+      oldPassword?: string
+      newPassword?: string
+    }): Promise<{ data: {
+      id: string;
+    } }> => {
+      return new Promise((resolve) => {
+        api
+          .put(`/users/${id}`, data)
+          .then((res) => resolve(res))
+          .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
+      });
+    },
+    deleteProfile: async (id: string): Promise<{ data: {
+      id: string;
+    } }> => {
+      return new Promise((resolve) => {
+        api
+          .delete(`/users/${id}`)
           .then((res) => resolve(res))
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
       });

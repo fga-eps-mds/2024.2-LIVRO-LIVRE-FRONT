@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { NavBar } from '../../components/NavBar';
 
-function Home() {
+function Loans() {
   return (
     <Box>
       <NavBar />
@@ -9,4 +9,4 @@ function Home() {
   );
 }
 
-export default Home
+export default Loans

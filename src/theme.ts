@@ -10,6 +10,9 @@ const customConfig = defineConfig({
         green: {
           100: { value: '#037030' },
         },
+        red: {
+          100: { value: '#F2542D' },
+        },
       },
     },
   },
