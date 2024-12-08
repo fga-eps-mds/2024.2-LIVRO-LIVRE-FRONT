@@ -1,34 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router"
+import SignUp from "./pages/SignUp"
+import Home from "./pages/Home"
+import NotFound from "./pages/NotFound"
+import { AuthProvider } from "./hooks/useAuth"
+import { ChakraProvider } from "@chakra-ui/react"
+import { system } from "./theme"
+import Profile from "./pages/Profile"
+import ProfileEdit from "./pages/ProfileEdit"
+import Warnings from "./pages/Warnings"
+import Loans from "./pages/Loans"
+import { Toaster } from "./components/ui/toaster"
+import PrivateRoute from './PrivateRoute';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ChakraProvider value={system}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="*" element={<NotFound />} />
+            <Route path="/cadastro" element={<SignUp />} />
+            <Route path="/inicio" element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path="/perfil" element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path="/perfil/editar" element={<PrivateRoute><ProfileEdit /></PrivateRoute>} />
+            <Route path="/avisos" element={<PrivateRoute><Warnings /></PrivateRoute>} />
+            <Route path="/emprestimos" element={<PrivateRoute><Loans /></PrivateRoute>} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+      <Toaster />
+    </ChakraProvider>
   )
 }
 
