@@ -38,7 +38,7 @@ body {
 }
 
 .inputEmail::placeholder {
-    padding-left: 10px;
+    padding-left: 40px;
     color: #0A3063;
 }
 #button {
@@ -55,18 +55,38 @@ body {
 #button:disabled{
     background-color: #BEBEBE;
 }
+.input-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+input::placeholder {
+    color: #0A3063;
+    padding-left: 40px;
+  }
+
+.email-icon {
+    position: absolute;
+    top: 18px;
+    left: 10px;
+    font-size: 25px;
+    color: #0A3063;
+  }
+
 
 /* Estilos responsivos */
 
 /* Telas pequenas (smartphones) */
 @media (max-width: 768px) {
     #button {
-        width: 90vw;
+        width: 85vw;
         height: 50px;
         font-size: 80%;
     }
     .inputEmail {
-        width: 90vw;
+        width: 85vw;
     }
 
 }
@@ -84,31 +104,48 @@ body {
 
     .inputEmail {
         height: 55px;
+        width: 70vw;
     }
 
     #button {
         height: 60px;
+        width: 70vw;
     }
+    .email-icon {
+        position: absolute;
+        top: 15px;
+        left: 10px;
+        font-size: 25px;
+        color: #0A3063;
+      }
 }
 
 /* Telas grandes (desktops) */
 @media (min-width: 1025px) {
     #title {
-        font-size: 26px;
-    }
-
-    #subtitle {
         font-size: 20px;
     }
 
+    #subtitle {
+        font-size: 16px;
+        width: 80%;
+    }
+
     .inputEmail {
-        height: 60px;
+        height: 50px;
         width: 80%;
         padding: 0px;
     }
 
     #button {
-        height: 66px;
+        height: 50px;
         width: 80%;
     }
+    .email-icon {
+        position: absolute;
+        top: 13px;
+        left: 10px;
+        font-size: 25px;
+        color: #0A3063;
+      }
 }

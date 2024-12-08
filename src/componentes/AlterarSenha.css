@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-/* Estilo Geral */
 body {
     background-color: white;
     font-family: 'Open Sans', sans-serif;
@@ -33,7 +32,6 @@ body {
     width: 90%;
     margin-bottom: 10px;
     height: 60px;
-    padding-left: 40px;
 }
 
 #senha::placeholder, #confirmacaoSenha::placeholder {
@@ -64,6 +62,9 @@ body {
     font-size: 14px;
     margin-bottom: 10px;
 }
+.hide-icon .lock-icon {
+    display: none;
+}
 
 .input-icon-container {
     position: relative;
@@ -71,14 +72,7 @@ body {
     align-items: center;
     margin-bottom: 10px;
   }
-  
-  .input-icon-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
+
   input::placeholder {
     color: #0A3063;
     padding-left: 40px;
@@ -86,24 +80,21 @@ body {
   
   .lock-icon {
     position: absolute;
-    top: 12px;
+    top: 17px;
     left: 10px;
     font-size: 25px;
     color: #0A3063;
   }
   
-  
-/* Media Queries for Responsiveness */
-
-/* For screens smaller than 768px (tablets and small screens) */
 @media (max-width: 325px) {
     #senha, #confirmacaoSenha {
         width: 100vw;
         height: 50px;
     }
     #buttonSalvar{
-        width: 95vw;
+        width: 100vw;
     }
+    
     .eye-icon {
         position: absolute;
         right: 10vw;
@@ -119,21 +110,23 @@ body {
         height: 50px;
     }
     #buttonSalvar{
-        width: 95vw;
+        width: 90vw;
     }
     .eye-icon {
         position: absolute;
-        right: 10vw;
+        right: 5vw;
         cursor: pointer;
         font-size: 20px;
         color: #0A3063;
       }
+    .infos p{
+        width: 90vw;
+    }
 }
 
-/* For screens smaller than 480px (smartphones) */
-@media (min-width: 769px) and (max-width: 1000px) {
+@media (min-width: 769px) and (max-width: 1023px) {
     #senha, #confirmacaoSenha {
-        width: 90vw;
+        width: 60vw;
     }
     .eye-icon {
         position: absolute;
@@ -145,12 +138,16 @@ body {
 }
 
 
-@media (min-width: 1000px) and (max-width: 10000px) {
+@media (min-width: 1024px) and (max-width: 10000px) {
+    .infos {
+        width: 50vw;
+        font-size:18px;
+    }
     #senha, #confirmacaoSenha {
-        width: 90vw;
+        width: 50vw;
     }
     #buttonSalvar{
-        width: 90vw;
+        width: 50vw;
     }
     .eye-icon {
         position: absolute;
@@ -158,5 +155,12 @@ body {
         cursor: pointer;
         font-size: 20px;
         color: #0A3063;
-      }
+    }
+    .lock-icon {
+    position: absolute;
+    top: 18px;
+    left: 10px;
+    font-size: 25px;
+    color: #0A3063;
+    }
 }

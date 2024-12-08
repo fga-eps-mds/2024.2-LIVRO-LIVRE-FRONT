@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-import { CiLock } from 'react-icons/ci';  // Ícone de cadeado
+import { CiLock } from 'react-icons/ci'; 
 import './AlterarSenha.css';
 
 function AlterarSenha() {
@@ -9,14 +9,27 @@ function AlterarSenha() {
     const [confirmacao, setConfirmacao] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [mostrarConfirmacaoSenha, setMostrarConfirmacaoSenha] = useState(false);
+    const [focusSenha, setFocusSenha] = useState(false);
+    const [focusConfirmacaoSenha, setFocusConfirmacaoSenha] = useState(false);
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const validarSenha = (senha: string) => {
+        const regex = /^(?=.*[A-Z]).{8,}$/; // Pelo menos 8 caracteres e uma letra maiúscula
+        return regex.test(senha);
+    };
+
+    const handleSubmit = (e: { preventDefault: () => void }) => {
         e.preventDefault();
 
         if (!senha || !confirmacaoSenha) {
             setConfirmacao("Por favor, preencha ambos os campos.");
             return;
         }
+
+        if (!validarSenha(senha)) {
+            setConfirmacao("A senha deve conter pelo menos 8 caracteres e uma letra maiúscula.");
+            return;
+        }
+
         if (senha === confirmacaoSenha) {
             setConfirmacao("Senhas confirmadas com sucesso!");
         } else {
@@ -27,7 +40,7 @@ function AlterarSenha() {
     const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => 
         (e: React.ChangeEvent<HTMLInputElement>) => {
             setter(e.target.value);
-            setConfirmacao(""); // Limpa a mensagem de confirmação ao alterar qualquer input
+            setConfirmacao("");
         };
 
     return (
@@ -38,13 +51,15 @@ function AlterarSenha() {
             </div>
             <form onSubmit={handleSubmit}>
                 <div className="input-icon-container">
-                    <CiLock className="lock-icon" />
+                    {!focusSenha && <CiLock className="lock-icon" />}
                     <input
                         id='senha'
                         type={mostrarSenha ? 'text' : 'password'}
                         value={senha}
+                        onFocus={() => setFocusSenha(true)}
+                        onBlur={() => setFocusSenha(false)}
                         onChange={handleInputChange(setInputSenha)}
-                        placeholder='Nova Senha'
+                        placeholder={!focusSenha ? 'Nova Senha' : ''}
                     />
                     <div
                         className="eye-icon"
@@ -54,13 +69,15 @@ function AlterarSenha() {
                     </div>
                 </div>
                 <div className="input-icon-container">
-                    <CiLock className="lock-icon" />
+                    {!focusConfirmacaoSenha && <CiLock className="lock-icon" />}
                     <input
                         id='confirmacaoSenha'
                         type={mostrarConfirmacaoSenha ? 'text' : 'password'}
                         value={confirmacaoSenha}
+                        onFocus={() => setFocusConfirmacaoSenha(true)}
+                        onBlur={() => setFocusConfirmacaoSenha(false)}
                         onChange={handleInputChange(setInputConfirmacaoSenha)}
-                        placeholder='Confirmar Nova Senha'
+                        placeholder={!focusConfirmacaoSenha ? 'Confirmar Nova Senha' : ''}
                     />
                     <div
                         className="eye-icon"
