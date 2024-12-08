@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+/* Estilo Geral */
+body {
+    background-color: white;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0; 
+    padding: 0;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px 0px 20px;
+}
+
+.infos {
+    color: #0A3063;
+    width: 95%;
+}
+
+.infos h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+
+#senha, #confirmacaoSenha {
+    display: block;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid gray;
+    color: black;
+    width: 90%;
+    margin-bottom: 10px;
+    height: 60px;
+}
+
+#senha::placeholder, #confirmacaoSenha::placeholder {
+    color: #0A3063;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#buttonSalvar {
+    background-color: #037030;
+    height: 60px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 0;
+}
+
+#buttonSalvar:disabled {
+    background-color: #bebebe;
+    cursor: not-allowed;
+}
+#msgConfirmacao{
+    color: red; 
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.input-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .input-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  input::placeholder {
+    color: #0A3063;
+    padding-left: 40px;
+  }
+  
+  .lock-icon {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    font-size: 25px;
+    color: #0A3063;
+  }
+  
+  
+/* Media Queries for Responsiveness */
+
+/* For screens smaller than 768px (tablets and small screens) */
+@media (max-width: 325px) {
+    #senha, #confirmacaoSenha {
+        width: 100vw;
+        height: 50px;
+    }
+    #buttonSalvar{
+        width: 95vw;
+    }
+    .eye-icon {
+        position: absolute;
+        right: 10vw;
+        cursor: pointer;
+        font-size: 20px;
+        color: #0A3063;
+      }
+}
+
+@media (max-width: 769px) {
+    #senha, #confirmacaoSenha {
+        width: 90vw;
+        height: 50px;
+    }
+    #buttonSalvar{
+        width: 95vw;
+    }
+    .eye-icon {
+        position: absolute;
+        right: 10vw;
+        cursor: pointer;
+        font-size: 20px;
+        color: #0A3063;
+      }
+}
+
+/* For screens smaller than 480px (smartphones) */
+@media (min-width: 769px) and (max-width: 1000px) {
+    #senha, #confirmacaoSenha {
+        width: 90vw;
+    }
+    .eye-icon {
+        position: absolute;
+        right: 5vw;
+        cursor: pointer;
+        font-size: 20px;
+        color: #0A3063;
+      }
+}
+
+
+@media (min-width: 1000px) and (max-width: 10000px) {
+    #senha, #confirmacaoSenha {
+        width: 90vw;
+    }
+    #buttonSalvar{
+        width: 90vw;
+    }
+    .eye-icon {
+        position: absolute;
+        right: 2vw;
+        cursor: pointer;
+        font-size: 20px;
+        color: #0A3063;
+      }
+}
