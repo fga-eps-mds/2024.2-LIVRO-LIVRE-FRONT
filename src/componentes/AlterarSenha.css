@@ -33,6 +33,7 @@ body {
     width: 90%;
     margin-bottom: 10px;
     height: 60px;
+    padding-left: 40px;
 }
 
 #senha::placeholder, #confirmacaoSenha::placeholder {

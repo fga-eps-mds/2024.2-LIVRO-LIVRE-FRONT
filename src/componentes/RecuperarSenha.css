@@ -27,7 +27,7 @@ body {
 }
 
 .inputEmail {
-    width: 95%;
+    width: 80%;
     height: 60px;
     background-color: white;
     color: black;
@@ -43,7 +43,7 @@ body {
 }
 #button {
     font-family: 'Poppins', sans-serif;
-    width: 95%;
+    width: 80%;
     height: 66px;
     background-color:#037030 ;
     color: white;
