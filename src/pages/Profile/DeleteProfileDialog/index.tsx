@@ -11,18 +11,15 @@ import {
   DialogCloseTrigger,
 } from "../../../components/ui/dialog"
 import { Button } from "../../../components/ui/button"
-import useApi from "../../../hooks/useApi"
 import { useAuth } from "../../../hooks/useAuth"
 import { useNavigate } from "react-router"
 
 const DeleteProfileDialog = () => {
   const navigate = useNavigate();
-  const { deleteProfile } = useApi();
-  const { signOut, getProfile } = useAuth();
+  const { signOut, deleteProfile } = useAuth();
   
   const handleDelete = async () => {
-    const profile = await getProfile();
-    await deleteProfile(profile.id);
+    await deleteProfile();
     signOut();
     navigate('/login');
   }
