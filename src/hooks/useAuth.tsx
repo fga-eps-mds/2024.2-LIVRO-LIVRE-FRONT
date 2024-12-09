@@ -38,6 +38,7 @@ type AuthContextType = {
   recoverPassword: (email: string) => Promise<boolean>;
   changePassword: (password: string, mailToken: string) => Promise<boolean>;
   getProfile: () => Promise<User>;
+  deleteProfile: () => Promise<boolean>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -50,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     recoverPassword: authRecoverPassword,
     changePassword: authChangePassword,
     getProfile: authGetProfile,
+    deleteProfile: authDeleteProfile,
   } = useApi();
 
   const localToken =
@@ -149,6 +151,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     })
     return false;
   }
+  
+  async function deleteProfile(): Promise<boolean> {
+    await authDeleteProfile(token);
+    toaster.create({
+      title: 'Perfil deletado com sucesso!',
+      type: 'success',
+    })
+    return true;
+  }
 
   function signOut(): void {
     typeof window !== 'undefined'
@@ -169,6 +180,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         recoverPassword,
         changePassword,
         getProfile,
+        deleteProfile,
       }}
     >
       {children}
