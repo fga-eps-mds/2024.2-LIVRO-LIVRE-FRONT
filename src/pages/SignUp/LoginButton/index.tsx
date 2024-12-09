@@ -10,7 +10,7 @@ function LoginButton() {
           textAlign={'center'}
           color={'blue.100'}
         >
-          Já possuí uma conta? <ChakraLink color={'green.100'}><Link to='/login'>Faça login aqui</Link></ChakraLink>
+          Já possui uma conta? <ChakraLink color={'green.100'}><Link to='/login'>Faça login aqui</Link></ChakraLink>
         </Text>
       </Stack>
     </Center>

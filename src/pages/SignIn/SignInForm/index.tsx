@@ -67,7 +67,7 @@ function SignInForm() {
               textAlign={'center'}
               color={'blue.100'}
             >
-              Não lembra sua senha? <ChakraLink color={'green.100'}><Link to='/recuperar-senha'>Recupere ela aqui</Link></ChakraLink>
+              Não lembra sua senha? <ChakraLink color={'green.100'}><Link to='/recuperar-senha'>Recupere-a aqui</Link></ChakraLink>
             </Text>
           </Stack>
         </Stack>
