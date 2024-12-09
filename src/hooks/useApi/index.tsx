@@ -28,7 +28,7 @@ const useApi = () => {
   );
 
   return {
-    getProfile: (token: string): Promise<{ data: User }> => {
+    getProfile: (token: string | null): Promise<{ data: User }> => {
       return new Promise((resolve) => {
         api
           .get('/auth/profile', {
@@ -91,29 +91,37 @@ const useApi = () => {
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
       });
     },
-    editProfile: async (id: string, data: {
+    editProfile: async (data: {
       firstName: string;
       lastName: string;
       email: string;
       phone: string;
       oldPassword?: string
       newPassword?: string
-    }): Promise<{ data: {
+    }, token: string | null): Promise<{ data: {
       id: string;
     } }> => {
       return new Promise((resolve) => {
         api
-          .put(`/users/${id}`, data)
+          .put('/users', data, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then((res) => resolve(res))
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
       });
     },
-    deleteProfile: async (id: string): Promise<{ data: {
+    deleteProfile: async (token: string | null): Promise<{ data: {
       id: string;
     } }> => {
       return new Promise((resolve) => {
         api
-          .delete(`/users/${id}`)
+          .delete('/users', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then((res) => resolve(res))
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
       });
