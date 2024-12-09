@@ -4,7 +4,6 @@ import { Input, Stack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { PasswordInput } from '../../../components/ui/password-input';
 import { Button } from '../../../components/ui/button';
-import useApi from '../../../hooks/useApi';
 import { Field } from '../../../components/ui/field';
 
 interface FormValues {
@@ -18,7 +17,6 @@ interface FormValues {
 }
 
 function SignUpForm() {
-  const [userId, setUserId] = useState('');
   const [loading, setLoading] = useState(false);
 
   const {
@@ -27,19 +25,18 @@ function SignUpForm() {
     setValue,
     watch,
     formState: { errors, isValid },
+    trigger,
   } = useForm<FormValues>();
 
-  const { editProfile, token } = useAuth();
-  const { getProfile } = useApi();
+  const { editProfile, getProfile } = useAuth();
 
   const getUserData = async () => {
-    if (!token) return;
-    const { data } = await getProfile(token);
-    setValue('firstName', data.firstName);
-    setValue('lastName', data.lastName);
-    setValue('email', data.email);
-    setValue('phone', data.phone);
-    setUserId(data.id)
+    const profile = await getProfile();
+    setValue('firstName', profile.firstName);
+    setValue('lastName', profile.lastName);
+    setValue('email', profile.email);
+    setValue('phone', profile.phone);
+    trigger();
   }
 
   useEffect(() => {
@@ -48,7 +45,7 @@ function SignUpForm() {
 
   const onSubmit = handleSubmit(async (data: FormValues) => {
     setLoading(true);
-    await editProfile(userId, {
+    await editProfile({
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
@@ -111,14 +108,14 @@ function SignUpForm() {
           <PasswordInput
             size={'2xl'}
             placeholder={'Senha nova'}
-            {...register('newPassword', { required: watch('oldPassword') !== '' })}
+            {...register('newPassword', { required: !!watch('oldPassword') })}
           />
           <Field invalid={!!errors.newPasswordConfirmation} errorText={errors.newPasswordConfirmation?.message}>
             <PasswordInput
               size={'2xl'}
               placeholder={'Confirmar senha nova'}
               {...register('newPasswordConfirmation', {
-                required: watch('newPassword') !== '',
+                required: !!watch('newPassword'),
                 validate: value => value === watch('newPassword') || 'As senhas não coincidem.',
               })}
             />

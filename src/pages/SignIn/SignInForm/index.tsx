@@ -22,7 +22,7 @@ function SignInForm() {
     formState: { errors, isValid },
   } = useForm<FormValues>();
 
-  const { signIn, token } = useAuth();
+  const { signIn, isAuthenticated } = useAuth();
 
   const onSubmit = handleSubmit(async (data: FormValues) => {
     setLoading(true);
@@ -34,9 +34,9 @@ function SignInForm() {
   })
 
   useEffect(() => {
-    if (!token) return;
+    if (!isAuthenticated) return;
     navigate('/inicio');
-  }, [token])
+  }, [isAuthenticated])
 
   return (
     <form onSubmit={onSubmit}>

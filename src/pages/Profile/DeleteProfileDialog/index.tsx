@@ -17,14 +17,12 @@ import { useNavigate } from "react-router"
 
 const DeleteProfileDialog = () => {
   const navigate = useNavigate();
-  const { deleteProfile, getProfile } = useApi();
-  const { token, signOut } = useAuth();
+  const { deleteProfile } = useApi();
+  const { signOut, getProfile } = useAuth();
   
   const handleDelete = async () => {
-    console.log('maia', 123)
-    if (!token) return;
-    const { data } = await getProfile(token);
-    await deleteProfile(data.id);
+    const profile = await getProfile();
+    await deleteProfile(profile.id);
     signOut();
     navigate('/login');
   }

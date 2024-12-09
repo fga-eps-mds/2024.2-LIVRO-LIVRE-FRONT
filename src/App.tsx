@@ -22,6 +22,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/login" element={<SignIn />} />
             <Route path="/cadastro" element={<SignUp />} />
             <Route path="/recuperar-senha" element={<RecoverPassword />} />

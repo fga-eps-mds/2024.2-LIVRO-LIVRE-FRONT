@@ -4,6 +4,7 @@ import { createContext, useState, useContext, ReactNode } from 'react';
 
 import useApi from './useApi';
 import { toaster } from '../components/ui/toaster';
+import { User } from '../interfaces/user';
 
 interface SignUpParams {
   firstName: string;
@@ -33,9 +34,10 @@ type AuthContextType = {
   signOut: () => void;
   signUp: (userToSignUp: SignUpParams) => Promise<boolean>;
   signIn: (userToSignIn: SignInParams) => Promise<boolean>;
-  editProfile: (id: string, profileToEdit: EditProfileParams) => Promise<boolean>;
+  editProfile: (profileToEdit: EditProfileParams) => Promise<boolean>;
   recoverPassword: (email: string) => Promise<boolean>;
-  changePassword: (password: string, token: string) => Promise<boolean>;
+  changePassword: (password: string, mailToken: string) => Promise<boolean>;
+  getProfile: () => Promise<User>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -47,6 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     editProfile: authEditProfile,
     recoverPassword: authRecoverPassword,
     changePassword: authChangePassword,
+    getProfile: authGetProfile,
   } = useApi();
 
   const localToken =
@@ -91,6 +94,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return true;
   }
 
+  async function getProfile(): Promise<User> {
+    const { data } = await authGetProfile(token);
+    return data;
+  }
+
   async function recoverPassword(email: string): Promise<boolean> {
     const { data } = await authRecoverPassword(email);
     if (data.success) {
@@ -108,8 +116,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return false;
   }
 
-  async function changePassword(password: string, token: string): Promise<boolean> {
-    const { data } = await authChangePassword(password, token);
+  async function changePassword(password: string, mailToken: string): Promise<boolean> {
+    const { data } = await authChangePassword(password, mailToken);
     if (data.success) {
       toaster.create({
         title: 'Senha alterada com sucesso! Você será redirecionado para o login...',
@@ -125,8 +133,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return false;
   }
 
-  async function editProfile(id: string, profileToEdit: EditProfileParams): Promise<boolean> {
-    const { data } = await authEditProfile(id, profileToEdit);
+  async function editProfile(profileToEdit: EditProfileParams): Promise<boolean> {
+    const { data } = await authEditProfile(profileToEdit, token);
     if (data.id) {
       toaster.create({
         title: 'Perfil editado com sucesso!',
@@ -160,6 +168,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         signIn,
         recoverPassword,
         changePassword,
+        getProfile,
       }}
     >
       {children}
