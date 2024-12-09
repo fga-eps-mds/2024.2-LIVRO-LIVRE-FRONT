@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   async function recoverPassword(email: string): Promise<boolean> {
     const { data } = await authRecoverPassword(email);
-    if (data.id) {
+    if (data.success) {
       toaster.create({
         title: 'E-mail enviado para recuperação de senha!',
         type: 'success',
@@ -110,7 +110,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   async function changePassword(password: string, token: string): Promise<boolean> {
     const { data } = await authChangePassword(password, token);
-    if (data.id) {
+    if (data.success) {
       toaster.create({
         title: 'Senha alterada com sucesso! Você será redirecionado para o login...',
         type: 'success',

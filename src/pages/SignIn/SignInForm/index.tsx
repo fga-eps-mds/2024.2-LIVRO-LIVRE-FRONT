@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
-import { useNavigate } from 'react-router';
-import { Input, Stack } from '@chakra-ui/react';
+import { Link, useNavigate } from 'react-router';
+import { Input, Stack, Link as ChakraLink, Text } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { PasswordInput } from '../../../components/ui/password-input';
 import { Button } from '../../../components/ui/button';
@@ -62,6 +62,14 @@ function SignInForm() {
               {...register('password', { required: "Campo obrigatório." })}
             />
           </Field>
+          <Stack gap={'25px'} width={'100%'}>
+            <Text
+              textAlign={'center'}
+              color={'blue.100'}
+            >
+              Não lembra sua senha? <ChakraLink color={'green.100'}><Link to='/recuperar-senha'>Recupere ela aqui</Link></ChakraLink>
+            </Text>
+          </Stack>
         </Stack>
         <Button
           loading={loading}

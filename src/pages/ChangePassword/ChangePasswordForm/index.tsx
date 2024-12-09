@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../../../components/ui/button';
 import { Field } from '../../../components/ui/field';
 import { PasswordInput } from '../../../components/ui/password-input';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 interface FormValues {
   password: string;
@@ -18,6 +18,7 @@ function useQuery() {
 
 function ChangePasswordForm() {
   const query = useQuery();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const token = query.get('token');
@@ -35,6 +36,7 @@ function ChangePasswordForm() {
     setLoading(true);
     await changePassword(data.password, token);
     setLoading(false);
+    navigate('/login')
   })
 
   return (

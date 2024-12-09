@@ -74,7 +74,7 @@ const useApi = () => {
     recoverPassword: (email: string): Promise<{ data: any }> => {
       return new Promise((resolve) => {
         api
-          .post(`/auth/recover-password/${email}`)
+          .post(`/auth/recover-password`, { email })
           .then((res) => resolve(res))
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
       });
