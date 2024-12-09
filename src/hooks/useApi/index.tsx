@@ -71,6 +71,26 @@ const useApi = () => {
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
       });
     },
+    recoverPassword: (email: string): Promise<{ data: any }> => {
+      return new Promise((resolve) => {
+        api
+          .post(`/auth/recover-password/${email}`)
+          .then((res) => resolve(res))
+          .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
+      });
+    },
+    changePassword: (password: string, token: string): Promise<{ data: any }> => {
+      return new Promise((resolve) => {
+        api
+          .post(`/auth/change-password`, { password }, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => resolve(res))
+          .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
+      });
+    },
     editProfile: async (id: string, data: {
       firstName: string;
       lastName: string;
