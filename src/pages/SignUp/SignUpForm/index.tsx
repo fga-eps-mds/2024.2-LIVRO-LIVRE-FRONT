@@ -24,7 +24,11 @@ function SignUpForm() {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    watch,
   } = useForm<FormValues>();
+
+  
+  
 
   const { signUp, isAuthenticated } = useAuth();
 
@@ -100,7 +104,10 @@ function SignUpForm() {
             <PasswordInput
               size={'2xl'}
               placeholder={'Confirmar senha'}
-              {...register('passwordConfirmation', { required: "Campo obrigatório." })}
+              {...register('passwordConfirmation', { required: "Campo obrigatório.",
+              validate: (value) =>
+              value === watch('password') || "As senhas não correspondem."
+              })}
             />
           </Field>
         </Stack>
