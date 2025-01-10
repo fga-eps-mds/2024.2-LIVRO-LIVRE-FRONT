@@ -66,7 +66,10 @@ const useApi = () => {
     } }> => {
       return new Promise((resolve) => {
         api
-          .post('/auth/signin', data)
+          .post('/auth/signin', {
+            ...data,
+            role: 'user',
+          })
           .then((res) => resolve(res))
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
       });
