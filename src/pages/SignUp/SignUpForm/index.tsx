@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { PasswordInput } from '../../../components/ui/password-input';
 import { Button } from '../../../components/ui/button';
 import { Field } from '../../../components/ui/field';
+import { formatPhoneNumber } from './phoneformat';
 
 interface FormValues {
   firstName: string;
@@ -25,10 +26,8 @@ function SignUpForm() {
     handleSubmit,
     formState: { errors, isValid },
     watch,
+    trigger,
   } = useForm<FormValues>();
-
-  
-  
 
   const { signUp, isAuthenticated } = useAuth();
 
@@ -78,21 +77,29 @@ function SignUpForm() {
                   message: "E-mail inválido."
                 }
               })}
+              onChange={(e) => {
+                register('email').onChange(e); 
+                trigger('email'); 
+            }}
             />
           </Field>
-          <Field invalid={!!errors.phone} errorText={errors.phone?.message}>
-            <Input
-              size={'2xl'}
-              placeholder={'Telefone'}
-              {...register('phone', {
-                required: "Campo obrigatório.",
-                pattern: {
-                  value: /^\d{11}$/,
-                  message: "Telefone inválido."
-                }
-              })}
-            />
-          </Field>
+           <Input
+            size={'2xl'}
+            placeholder={'(DDD) Telefone'}
+            {...register('phone', {
+             required: "Campo obrigatório.",
+              validate: (value) => {
+              const onlyNumbers = value.replace(/\D/g, '');
+            return onlyNumbers.length === 11 || "Telefone inválido.";
+        }
+    })}
+    onChange={(e) => {
+        const formatted = formatPhoneNumber(e.target.value); 
+        e.target.value = formatted; 
+        register('phone').onChange(e); 
+        trigger('phone'); 
+    }}
+/>
           <Field invalid={!!errors.password} errorText={errors.password?.message}>
             <PasswordInput
               size={'2xl'}
@@ -100,15 +107,24 @@ function SignUpForm() {
               {...register('password', { required: "Campo obrigatório." })}
             />
           </Field>
+
           <Field invalid={!!errors.passwordConfirmation} errorText={errors.passwordConfirmation?.message}>
-            <PasswordInput
-              size={'2xl'}
-              placeholder={'Confirmar senha'}
-              {...register('passwordConfirmation', { required: "Campo obrigatório.",
-              validate: (value) =>
-              value === watch('password') || "As senhas não correspondem."
-              })}
-            />
+    <PasswordInput
+
+        size={'2xl'}
+        placeholder={'Confirmar senha'}
+        {...register('passwordConfirmation', {
+            required: "Campo obrigatório.",
+            validate: (value) =>
+                value === watch('password') || "As senhas não correspondem."
+        })}
+        onChange={(e) => {
+            register('passwordConfirmation').onChange(e);
+            trigger('passwordConfirmation'); 
+        }}
+    />
+
+
           </Field>
         </Stack>
         <Button
