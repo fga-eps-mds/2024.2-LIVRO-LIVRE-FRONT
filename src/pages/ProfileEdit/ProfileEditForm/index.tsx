@@ -89,13 +89,13 @@ function SignUpForm() {
           </Field>
           <Field invalid={!!errors.phone} errorText={errors.phone?.message}>
             <Input
-              size={'2xl'}
-              placeholder={'Telefone'}
+              size="2xl"
+              placeholder="Telefone"
               {...register('phone', {
-                required: "Campo obrigatório.",
+                required: 'Campo obrigatório.',
                 pattern: {
-                  value: /^\d{11}$/,
-                  message: "Telefone inválido."
+                  value: /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/,
+                  message: 'Telefone inválido. Formato esperado (99) 99999-9999.'
                 }
               })}
             />

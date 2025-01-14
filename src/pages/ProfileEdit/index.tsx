@@ -1,6 +1,6 @@
 import { Box, Center, Stack } from '@chakra-ui/react';
 import ProfileEditForm from './ProfileEditForm';
-import ProfileEditHeader from './ProfileEditHeader';
+import ProfileEditHeader from '../NotFound/ProfileEditHeader';
 
 function ProfileEdit() {
   return (
