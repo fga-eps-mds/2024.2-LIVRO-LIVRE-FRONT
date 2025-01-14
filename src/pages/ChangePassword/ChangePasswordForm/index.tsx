@@ -16,7 +16,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-function ChangePasswordForm() {
+ function ChangePasswordForm() {
   const query = useQuery();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
