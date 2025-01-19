@@ -8,8 +8,8 @@ import { system } from "./theme"
 import Profile from "./pages/Profile"
 import ProfileEdit from "./pages/ProfileEdit"
 import Warnings from "./pages/Warnings"
-import Loans from "./pages/Loans"
 import { Toaster } from "./components/ui/toaster"
+import HistoricoEmprestimos from "./pages/HistoricoEmprestimos"
 import PrivateRoute from './PrivateRoute';
 import SignIn from "./pages/SignIn"
 import RecoverPassword from "./pages/RecoverPassword"
@@ -31,7 +31,7 @@ function App() {
             <Route path="/perfil" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="/perfil/editar" element={<PrivateRoute><ProfileEdit /></PrivateRoute>} />
             <Route path="/avisos" element={<PrivateRoute><Warnings /></PrivateRoute>} />
-            <Route path="/emprestimos" element={<PrivateRoute><Loans /></PrivateRoute>} />
+            <Route path="/emprestimos" element={<PrivateRoute><HistoricoEmprestimos /></PrivateRoute>} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

@@ -1,0 +1,13 @@
+{
+  "emprestimos": [
+    { "livro": "Dom Quixote", "dataDeEmprestimo": "2024-01-05", "dataDeDevolucao": "2025-01-01", "status": "Devolvido" },
+    { "livro": "1984", "dataDeEmprestimo": "2024-01-06", "dataDeDevolucao": "2025-01-02", "status": "Devolvido" },
+    { "livro": "O Hobbit", "dataDeEmprestimo": "2024-01-07", "dataDeDevolucao": "0000-00-00", "status": "Em posse" },
+    { "livro": "1985", "dataDeEmprestimo": "2024-01-08", "dataDeDevolucao": "2025-01-03", "status": "Devolvido" },
+    { "livro": "1986", "dataDeEmprestimo": "2024-01-09", "dataDeDevolucao": "2025-01-04", "status": "Devolvido" },
+    { "livro": "1987", "dataDeEmprestimo": "2024-01-10", "dataDeDevolucao": "2025-01-05", "status": "Devolvido" },
+    { "livro": "1988", "dataDeEmprestimo": "2024-01-11", "dataDeDevolucao": "2025-01-06", "status": "Devolvido" },
+    { "livro": "1989", "dataDeEmprestimo": "2024-01-12", "dataDeDevolucao": "2025-01-07", "status": "Devolvido" },
+    { "livro": "1990", "dataDeEmprestimo": "2024-01-13", "dataDeDevolucao": "2025-01-08", "status": "Devolvido" }
+  ]
+}
