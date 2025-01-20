@@ -14,6 +14,7 @@ import PrivateRoute from './PrivateRoute';
 import SignIn from "./pages/SignIn"
 import RecoverPassword from "./pages/RecoverPassword"
 import ChangePassword from "./pages/ChangePassword"
+import SearchBook from "./pages/SearchBook"
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/perfil/editar" element={<PrivateRoute><ProfileEdit /></PrivateRoute>} />
             <Route path="/avisos" element={<PrivateRoute><Warnings /></PrivateRoute>} />
             <Route path="/emprestimos" element={<PrivateRoute><Loans /></PrivateRoute>} />
+            <Route path="/pesquisar-livro" element={<SearchBook />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
