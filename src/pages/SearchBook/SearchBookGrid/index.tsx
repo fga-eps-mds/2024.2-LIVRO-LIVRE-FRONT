@@ -1,7 +1,9 @@
-import { Separator, Text, Grid, Image, Heading, Container, Stack, Box} from '@chakra-ui/react';
+import { Separator, Text, Grid, Image, Heading, Container, Stack, Box, HStack, Button} from '@chakra-ui/react';
 import { Rating } from "../../../components/ui/rating"
+import { useEffect, useState } from 'react';
 
-const books = Array.from({ length: 20 }, (_, i) => ({  //~ array com tipo uma struct com os dados dos livros ue serão puxados do back end
+//~ dados ficticios
+const initialBooks = Array.from({ length: 20 }, (_, i) => ({  //~ array com tipo uma struct com os dados dos livros ue serão puxados do back end
     id: i,
     titulo: `Título do Livro ${i + 1}`,
     autor: `Autor ${i + 1}`,
@@ -10,13 +12,21 @@ const books = Array.from({ length: 20 }, (_, i) => ({  //~ array com tipo uma st
 }));
 
 function SearchBookGrid() {
+    //~ use State dos livros para manipular 
+    const [books, setBooks] = useState(initialBooks);
+
+    useEffect(() => {
+        //~ Função para ordenar livros pelo rating
+        const sortedBooks = [...initialBooks].sort((a, b) => b.rating - a.rating);
+        setBooks(sortedBooks);
+    }, []); //~ Executa apenas uma vez ao carregar
     return (
         <Stack gap={3}>
             <Separator />
             <Box maxHeight={'520px'} overflowY={'scroll'}>
             <Grid templateColumns={"repeat(2, 1fr)"}
              gap={'4'} alignItems={'center'}>
-                {books.map((book,index)=>(   //~ renderiza um container por cada item do array books e usa os dados de cada item 
+                {books.map((book)=>(   //~ renderiza um container por cada item do array books e usa os dados de cada item 
                     <Container  key={book.id} //^ chave única para o react renderizar os conteudos e não dar warning 
                     width={'150px'} bg={'gray.100'} p={'10px'} shadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px;"}
                     borderRadius={'4px'} justifySelf={'center'} height={'260px'}> 
@@ -39,9 +49,3 @@ function SearchBookGrid() {
 
 export default SearchBookGrid
 
-//~ Exibir os resultados em formato de grid no frontend.
-// ~ Garantir que cada item do grid inclua:
-// ~ Capa do livro.
-//~  Título do livro.
-//~  Autor do livro.
-//~ Nota média do livro (com visualização de estrelas ou nota numérica).
