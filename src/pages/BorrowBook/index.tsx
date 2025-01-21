@@ -1,23 +1,32 @@
-import { Box, Button, Heading, Flex, Image } from '@chakra-ui/react';
+import { Box, Grid } from '@chakra-ui/react';
 import { NavBar } from '../../components/NavBar';
+import BorrowBookHeader from './BorrowBookHeader';
+import BorrowBookLivro from './BorrowBookLivro';
+import BorrowButton from './Buton';
 
+const book = {
+  title: "Curupira, O guardião da floresta",
+  author: "Saci-Pererê",
+  rating: 5,
+  description: "Lorem Ipsum Lorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem Ipsum.",
+  coverImage: "/logo.png"
+};
 
 function BorrowBook() {
   return (
     <Box>
-      <Box as="header" bg="#D9D9D9" color="black" px={8} py={10}>
-        <Flex justify="space-between" align="center"></Flex>
-        <Flex justify="center" align="center" h="100%">
-        <Image src="/logo.png" alt="Logo" boxSize="100px" />
-        </Flex>
+      <BorrowBookHeader />
 
-       
-
-
-      </Box>
-
-
-
+      <Grid
+        templateColumns="1fr"
+        gap={8}
+        justifyItems="center"
+        alignItems="center"
+        p={4}
+      >
+        <BorrowBookLivro book={book} />
+        <BorrowButton />
+      </Grid>
 
       <NavBar />
     </Box>
