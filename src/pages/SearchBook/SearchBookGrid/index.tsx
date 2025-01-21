@@ -1,4 +1,4 @@
-import { Separator, Text, Grid, Image, Heading, Container, Stack, Box, HStack, Button} from '@chakra-ui/react';
+import { Separator, Text, Grid, Image, Heading, Container, Stack, Box} from '@chakra-ui/react';
 import { Rating } from "../../../components/ui/rating"
 import { useEffect, useState } from 'react';
 
