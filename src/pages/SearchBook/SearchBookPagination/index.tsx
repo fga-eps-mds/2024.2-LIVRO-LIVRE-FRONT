@@ -1,4 +1,4 @@
-import { HStack, Separator } from '@chakra-ui/react';
+import { HStack, Separator, Center } from '@chakra-ui/react';
 import { 
     PaginationItems,
     PaginationNextTrigger, 
@@ -6,19 +6,30 @@ import {
     PaginationRoot
  } from '../../../components/ui/pagination';
 
+interface SearchBookPaginationProps {
+    currentPage: number;
+    totalPages: number;
+    handlePageChange: (page: number) => void; // Função para atualizar a página
+}
 
-
-function SearchBookPagination() {
+function SearchBookPagination({ currentPage, totalPages, handlePageChange }: SearchBookPaginationProps) {
     return (
-        <PaginationRoot count={20} pageSize={2} defaultPage={1}>
-            <Separator />
-            <HStack>
-                <PaginationPrevTrigger />
-                <PaginationItems />
-                <PaginationNextTrigger />
-            </HStack>
-        </PaginationRoot>
+        <Center>
+            <PaginationRoot
+                page={currentPage}
+                count={totalPages}
+                pageSize={1}
+                onPageChange={(e) => handlePageChange(e.page)}
+            >
+                <Separator />
+                <HStack>
+                    <PaginationPrevTrigger     />
+                    <PaginationItems />
+                    <PaginationNextTrigger />
+                </HStack>
+            </PaginationRoot>
+        </Center>
     );
 }
 
-export default SearchBookPagination
+export default SearchBookPagination;

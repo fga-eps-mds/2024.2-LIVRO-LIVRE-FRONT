@@ -3,7 +3,6 @@ import { Box, Center, Stack } from '@chakra-ui/react';
 import SearchBookHeader from './SearchBookHeader';
 import SearchBookForm from './SearchBookForm';
 import SearchBookGrid from './SearchBookGrid';
-import SearchBookPagination from './SearchBookPagination';
 import { NavBar } from '../../components/NavBar';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -21,11 +20,10 @@ function SearchBook() {
     return (
         <Box padding='40px'>
             <Center>
-                <Stack gap={'40px'}>
+                <Stack gap={'40px'} width='400px'>
                     <SearchBookHeader />
                     <SearchBookForm />
                     <SearchBookGrid />
-                    <SearchBookPagination />
                 </Stack>
                 <NavBar />
             </Center>
