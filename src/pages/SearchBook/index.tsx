@@ -20,7 +20,7 @@ function SearchBook() {
     return (
         <Box padding='40px'>
             <Center>
-                <Stack gap={'40px'} width='400px'>
+                <Stack gap={'40px'} width={{base:'400px', lg:'700px'}}>
                     <SearchBookHeader />
                     <SearchBookForm />
                     <SearchBookGrid />

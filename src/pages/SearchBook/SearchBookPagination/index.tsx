@@ -21,7 +21,7 @@ function SearchBookPagination({ currentPage, totalPages, handlePageChange }: Sea
                 pageSize={1}
                 onPageChange={(e) => handlePageChange(e.page)}
             >
-                <Separator />
+                <Separator mb={'10px'} />
                 <HStack>
                     <PaginationPrevTrigger     />
                     <PaginationItems />

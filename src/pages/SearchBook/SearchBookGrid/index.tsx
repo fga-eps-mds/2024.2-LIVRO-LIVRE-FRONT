@@ -35,24 +35,25 @@ function SearchBookGrid() {
 
     useEffect(() => {
         //~ Função para ordenar livros pelo rating
-        const sortedBooks = [...initialBooks].sort((a, b) => b.rating - a.rating);
-        setBooks(sortedBooks);
+        // const sortedBooks = [...initialBooks].sort((a, b) => b.rating - a.rating); //^ initial books ordenado por rating
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
-        const paginatedBooks = initialBooks.slice(startIndex, endIndex);
+        // const paginatedBooks = sortedBooks.slice(startIndex, endIndex); //^ ordena pelo rating
+        const paginatedBooks = initialBooks.slice(startIndex, endIndex); //^ ordena pelo index 
         setBooks(paginatedBooks);
     }, [currentPage]); //~ Executa apenas uma vez ao carregar
 
+   //~ 55vh para deixar responsivo 
     return (
-        <Stack gap={3}>
+        <Stack gap={3} maxHeight={'55vh'}>  
             <Separator />
-            <Box maxHeight={'520px'} overflowY={'scroll'}>
-                <Grid templateColumns={"repeat(2, 1fr)"}
+            <Box  overflowY={'scroll'}>
+                <Grid templateColumns={{base:"repeat(2, 1fr)", lg:'repeat(3, 1fr)' }} 
                     gap={'4'} alignItems={'center'}>
                     {books.map((book) => (   //~ renderiza um container por cada item do array books e usa os dados de cada item 
                         <Container key={book.id} //^ chave única para o react renderizar os conteudos e não dar warning 
-                            width={'150px'} bg={'gray.100'} p={'10px'} shadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px;"}
-                            borderRadius={'4px'} justifySelf={'center'} height={'260px'}>
+                            width={{base:'150px' ,lg:'200px'}} bg={'gray.100'} p={'10px'} shadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px;"} 
+                            borderRadius={'4px'} justifySelf={'center'} height={{base:'210px', lg: '250px'}}>
                             <Image
                                 src={book.imageUrl}
                                 alt={"Capa do Livro " + book.titulo}
