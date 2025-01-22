@@ -1,7 +1,6 @@
 import { Box, Center, Stack } from '@chakra-ui/react';
 
 import SearchBookHeader from './SearchBookHeader';
-import SearchBookForm from './SearchBookForm';
 import SearchBookGrid from './SearchBookGrid';
 import { NavBar } from '../../components/NavBar';
 
@@ -22,7 +21,6 @@ function SearchBook() {
             <Center>
                 <Stack gap={'40px'} width={{base:'400px', lg:'700px'}}>
                     <SearchBookHeader />
-                    <SearchBookForm />
                     <SearchBookGrid />
                 </Stack>
                 <NavBar />

@@ -33,7 +33,7 @@ function App() {
             <Route path="/perfil/editar" element={<PrivateRoute><ProfileEdit /></PrivateRoute>} />
             <Route path="/avisos" element={<PrivateRoute><Warnings /></PrivateRoute>} />
             <Route path="/emprestimos" element={<PrivateRoute><Loans /></PrivateRoute>} />
-            <Route path="/pesquisar-livro" element={<SearchBook />} />
+            <Route path="/pesquisar-livro" element={<PrivateRoute><SearchBook /></PrivateRoute>} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
