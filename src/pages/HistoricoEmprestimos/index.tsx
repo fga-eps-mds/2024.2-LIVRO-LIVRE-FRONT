@@ -13,8 +13,9 @@ function HistoricoEmprestimos() {
   const [emprestimos, setEmprestimos] = useState<Emprestimo[]>([]);
   const [, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedFilter, setSelectedFilter] = useState<string>('default');
 
-  useEffect(() => {
+  const fetchEmprestimos = () => {
     axios
       .get('http://localhost:3001/emprestimos')
       .then((response) => {
@@ -25,7 +26,15 @@ function HistoricoEmprestimos() {
         console.error('Erro ao buscar os dados:', error);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchEmprestimos();
   }, []);
+
+  useEffect(() => {
+    fetchEmprestimos();
+  }, [selectedFilter]);
 
   const handleFilter = () => {
     const selectElement = document.querySelector('select');
@@ -74,6 +83,28 @@ function HistoricoEmprestimos() {
       });
   };
 
+  const handleDurationFilter = (duration: string) => {
+    axios
+      .get('http://localhost:3001/emprestimos')
+      .then((response) => {
+        const filteredEmprestimos = response.data.filter((emprestimo: Emprestimo) => {
+          const duracao = (new Date(emprestimo.dataDeDevolucao).getTime() - new Date(emprestimo.dataDeEmprestimo).getTime()) / (24 * 60 * 60 * 1000); // duration in days
+          if (duration === 'short') {
+            return duracao <= 7; // 7 days
+          } else if (duration === 'medium') {
+            return duracao > 7 && duracao <= 30; // 7-30 days
+          } else if (duration === 'long') {
+            return duracao > 30; // more than 30 days
+          }
+          return true;
+        });
+        setEmprestimos(filteredEmprestimos);
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar os dados:', error);
+      });
+  };
+
   const handleSort = (order: 'asc' | 'desc') => {
     const sortedEmprestimos = [...emprestimos].sort((a, b) => {
       const dateA = new Date(a.dataDeEmprestimo).getTime();
@@ -100,23 +131,14 @@ function HistoricoEmprestimos() {
           </button>
           <select
             style={{ backgroundColor: '#D9D9D9', width: '250px', height: '50px', borderRadius: '8px' }}
-            onChange={() => {
-              axios
-                .get('http://localhost:3001/emprestimos')
-                .then((response) => {
-                  setEmprestimos(response.data);
-                })
-                .catch((error) => {
-                  console.error('Erro ao buscar os dados:', error);
-                });
-            }}
+            onChange={(e) => setSelectedFilter(e.target.value)}
           >
             <option value="default">Filtrar por:</option>
             <option value="status">Status do empréstimo</option>
             <option value="data">Por Data</option>
             <option value="duracao">Duração do empréstimo</option>
           </select>
-          {document.querySelector('select')?.value === 'data' && (
+          {selectedFilter === 'data' && (
             <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '10px' }}>
               <input
                 type="date"
@@ -145,7 +167,7 @@ function HistoricoEmprestimos() {
               />
             </div>
           )}
-          {document.querySelector('select')?.value === 'status' && (
+          {selectedFilter === 'status' && (
             <select
               style={{ backgroundColor: '#D9D9D9', width: '150px', height: '50px', borderRadius: '8px', marginLeft: '10px' }}
               onChange={(e) => handleStatusFilter(e.target.value)}
@@ -153,6 +175,16 @@ function HistoricoEmprestimos() {
               <option value="Todos">Todos</option>
               <option value="Em posse">Pendente</option>
               <option value="Devolvido">Devolvido</option>
+            </select>
+          )}
+          {selectedFilter === 'duracao' && (
+            <select
+              style={{ backgroundColor: '#D9D9D9', width: '150px', height: '50px', borderRadius: '8px', marginLeft: '10px' }}
+              onChange={(e) => handleDurationFilter(e.target.value)}
+            >
+              <option value="short">Até 7 dias</option>
+              <option value="medium">7 a 30 dias</option>
+              <option value="long">Mais de 30 dias</option>
             </select>
           )}
         </div>
@@ -186,11 +218,10 @@ function HistoricoEmprestimos() {
                       <span style={{ color: 'black', fontSize: '20px', fontWeight: '400', wordWrap: 'break-word', textAlign: 'center', marginTop: '10px' }}>
                         {emprestimo.livro}
                       </span>
-                      <div style={{ color: 'black', fontSize: '15px', fontWeight: '400', wordWrap: 'break-word', marginTop: '10px' }}>
+                      <div style={{ color: 'black', fontSize: '15px', fontWeight: '400', wordWrap: 'break-word', marginTop: '10px' }}></div>
                         Data de Empréstimo: {new Date(emprestimo.dataDeEmprestimo).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                         <br />
                         Data de Devolução: {new Date(emprestimo.dataDeDevolucao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
-                      </div>
                       <div style={{ color: 'black', fontSize: '15px', fontWeight: '400', wordWrap: 'break-word', marginTop: '10px' }}>
                         Status: {emprestimo.status}
                       </div>
