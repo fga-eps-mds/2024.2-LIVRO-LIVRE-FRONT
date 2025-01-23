@@ -1,6 +1,7 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { Rating } from "../../../components/ui/rating";
 
+
 interface Book {
   title: string;
   author: string;
@@ -20,12 +21,12 @@ const BorrowBookLivro = ({ book }: { book: Book }) => (
         mr={8} 
       />
       <Box maxW="400px">
-        <Text fontSize="2xl" fontWeight="bold" mb={4}>{`Título: ${book.title}`}</Text>
-        <Text fontSize="lg" mb={4}><strong>Autor:</strong> {book.author}</Text>
+        <Text fontSize="2xl" fontWeight="bold" mb={4}>{` ${book.title}`}</Text>
+        <Text fontSize="lp" mb={4}> Autor: {book.author}</Text>
         
         
         <Box mt={4}>
-          <Text fontSize="lp" fontWeight="bold" mb={2}>Avaliação:</Text>
+          <Text fontSize="lp" fontWeight="bold" mb={2}></Text>
           <Rating 
             readOnly allowHalf defaultValue={book.rating} size={'xs'} colorPalette={'yellow'} 
           />
