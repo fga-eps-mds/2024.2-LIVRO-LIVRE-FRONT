@@ -9,11 +9,11 @@ import Profile from "./pages/Profile"
 import ProfileEdit from "./pages/ProfileEdit"
 import Warnings from "./pages/Warnings"
 import { Toaster } from "./components/ui/toaster"
-import HistoricoEmprestimos from "./pages/HistoricoEmprestimos"
 import PrivateRoute from './PrivateRoute';
 import SignIn from "./pages/SignIn"
 import RecoverPassword from "./pages/RecoverPassword"
 import ChangePassword from "./pages/ChangePassword"
+import HistoricoEmprestimos from "./pages/HistoricoEmprestimos"
 
 function App() {
   return (
