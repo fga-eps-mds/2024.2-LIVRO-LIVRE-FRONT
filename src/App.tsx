@@ -13,7 +13,7 @@ import PrivateRoute from './PrivateRoute';
 import SignIn from "./pages/SignIn"
 import RecoverPassword from "./pages/RecoverPassword"
 import ChangePassword from "./pages/ChangePassword"
-import HistoricoEmprestimos from "./pages/HistoricoEmprestimos"
+import Loans from "./pages/Loans/loans"
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
             <Route path="/perfil" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="/perfil/editar" element={<PrivateRoute><ProfileEdit /></PrivateRoute>} />
             <Route path="/avisos" element={<PrivateRoute><Warnings /></PrivateRoute>} />
-            <Route path="/emprestimos" element={<PrivateRoute><HistoricoEmprestimos /></PrivateRoute>} />
+            <Route path="/emprestimos" element={<PrivateRoute><Loans /></PrivateRoute>} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
