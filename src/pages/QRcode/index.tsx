@@ -10,10 +10,10 @@ function QRcode() {
 
 
   return (
-    <Box>
-        <QRcodeHeader />
+    <Box> 
+        <QRcodeHeader/>
         <QRcodeCamera/>
-    s
+    
      <NavBar />
     </Box>
   );
