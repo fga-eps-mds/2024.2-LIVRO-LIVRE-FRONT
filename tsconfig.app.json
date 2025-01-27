@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "./jest.setup.ts"]
+  "include": ["src", "./jest.setup.ts", "test/loans.test.tsx"]
 }
