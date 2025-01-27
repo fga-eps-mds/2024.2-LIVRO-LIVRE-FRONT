@@ -15,7 +15,6 @@ const QRCodeReader: React.FC<QRCodeReaderProps> = ({ onResult }) => {
 
     const requestCameraPermission = async (): Promise<boolean> => {
       try {
-        // Solicita acesso à câmera
         await navigator.mediaDevices.getUserMedia({ video: true });
         console.log("Permissão da câmera concedida.");
         return true;
@@ -28,6 +27,7 @@ const QRCodeReader: React.FC<QRCodeReaderProps> = ({ onResult }) => {
 
   const startScanner = async () => {
     try {
+      requestCameraPermission();
       setIsScanning(true);
       setError(null); 
 
@@ -49,14 +49,22 @@ const QRCodeReader: React.FC<QRCodeReaderProps> = ({ onResult }) => {
         (decodedText: string) => {
           console.log("Código lido:", decodedText);
           onResult(decodedText); 
-          scanner.clear();
-          setIsScanning(false);
+      
+          
+          if (decodedText.startsWith("http://") || decodedText.startsWith("https://")) {
+            window.location.href = decodedText; 
+          } else {
+            console.warn("Texto lido não é um link válido:", decodedText);
+          }
+      
+          scanner.clear(); 
+          setIsScanning(false); 
         },
         (scanError) => {
           console.warn("Erro ao escanear QR Code:", scanError);
         }
       );
-
+      
       qrCodeScannerRef.current = scanner;
     } catch (err) {
       setError(
@@ -90,14 +98,22 @@ const QRCodeReader: React.FC<QRCodeReaderProps> = ({ onResult }) => {
   boxShadow="lg"
   mx="auto"
 ></Box>
-       
+
       {!isScanning ? (
-        <Button colorScheme="green" onClick={startScanner}>
+        <Button 
+        bg="#FF8800"
+        colorScheme="#FF8800" 
+        onClick={startScanner}
+        >
           Iniciar Leitura
         </Button>
       ) : (
-        <Button colorScheme="red" onClick={stopScanner}>
+        <Button 
+        bg="#FF8800"
+        colorScheme="#FF8800" 
+        onClick={stopScanner}>
           Parar Leitura
+
         </Button>
       )}
       {error && (

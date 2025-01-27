@@ -7,7 +7,7 @@ const  QRcodeHeader= () => {
     const navigate = useNavigate();
   
     const handleBack = () => {
-      navigate("/perfil");
+      navigate("/");
     };
   
     return (

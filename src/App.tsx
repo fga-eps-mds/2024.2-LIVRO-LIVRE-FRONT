@@ -14,6 +14,8 @@ import PrivateRoute from './PrivateRoute';
 import SignIn from "./pages/SignIn"
 import RecoverPassword from "./pages/RecoverPassword"
 import ChangePassword from "./pages/ChangePassword"
+import QRcode from "./pages/QRcode"
+import BorrowBook from "./pages/BorrowBook"
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
             <Route path="/perfil/editar" element={<PrivateRoute><ProfileEdit /></PrivateRoute>} />
             <Route path="/avisos" element={<PrivateRoute><Warnings /></PrivateRoute>} />
             <Route path="/emprestimos" element={<PrivateRoute><Loans /></PrivateRoute>} />
+            <Route path="/pegaremprestado" element={<BorrowBook />} />
+            <Route path="/qrcode" element={<QRcode/>}/>
           </Routes>
         </BrowserRouter>
       </AuthProvider>
