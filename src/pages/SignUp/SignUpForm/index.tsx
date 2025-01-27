@@ -80,7 +80,7 @@ function SignUpForm() {
               onChange={(e) => {
                 register('email').onChange(e); 
                 trigger('email'); 
-            }}
+              }}
             />
           </Field>
            <Input
@@ -90,39 +90,63 @@ function SignUpForm() {
              required: "Campo obrigatório.",
               validate: (value) => {
               const onlyNumbers = value.replace(/\D/g, '');
-            return onlyNumbers.length === 11 || "Telefone inválido.";
-        }
-    })}
-    onChange={(e) => {
-        const formatted = formatPhoneNumber(e.target.value); 
-        e.target.value = formatted; 
-        register('phone').onChange(e); 
-        trigger('phone'); 
-    }}
-/>
+              return onlyNumbers.length === 11 || "Telefone inválido.";
+              }
+            })}
+            onChange={(e) => {
+                const formatted = formatPhoneNumber(e.target.value); 
+                e.target.value = formatted; 
+                register('phone').onChange(e); 
+                trigger('phone'); 
+            }}
+          />
           <Field invalid={!!errors.password} errorText={errors.password?.message}>
             <PasswordInput
               size={'2xl'}
               placeholder={'Senha'}
-              {...register('password', { required: "Campo obrigatório." })}
+              {...register('password', { 
+                required: "Campo obrigatório.",
+                validate: (value) => {
+                  const minLength = 8;
+                  const hasUpperCase = /[A-Z]/.test(value);
+                  const hasNumber = /[0-9]/.test(value);
+                  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+          
+                  if (value.length < minLength) {
+                    return "A senha deve ter pelo menos 8 caracteres.";
+                  }
+                  if (!hasUpperCase) {
+                    return "A senha deve conter pelo menos uma letra maiúscula.";
+                  }
+                  if (!hasNumber) {
+                    return "A senha deve conter pelo menos um número.";
+                  }
+                  if (!hasSpecialChar) {
+                    return "A senha deve conter pelo menos um caractere especial.";
+                  }
+                  return true;
+                },
+               })}
+               onChange={(e) => {
+                register('password').onChange(e);
+                trigger('password');
+              }}
             />
           </Field>
-
           <Field invalid={!!errors.passwordConfirmation} errorText={errors.passwordConfirmation?.message}>
-    <PasswordInput
-
-        size={'2xl'}
-        placeholder={'Confirmar senha'}
-        {...register('passwordConfirmation', {
-            required: "Campo obrigatório.",
-            validate: (value) =>
+          <PasswordInput
+            size={'2xl'}
+              placeholder={'Confirmar senha'}
+              {...register('passwordConfirmation', {
+                required: "Campo obrigatório.",
+                validate: (value) =>
                 value === watch('password') || "As senhas não correspondem."
-        })}
-        onChange={(e) => {
-            register('passwordConfirmation').onChange(e);
-            trigger('passwordConfirmation'); 
-        }}
-    />
+              })}
+              onChange={(e) => {
+                register('passwordConfirmation').onChange(e);
+                trigger('passwordConfirmation'); 
+              }}
+          />
 
 
           </Field>
