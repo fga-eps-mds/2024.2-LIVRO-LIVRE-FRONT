@@ -26,7 +26,7 @@ const  QRcodeHeader= () => {
             ←
           </Button>
           <Flex justify="center" flex="1">
-            <Image src="/logo.png" alt="Logo" boxSize="50px" />
+            <Image src="/logo.jpeg" alt="Logo" boxSize="50px" />
           </Flex>
         </Flex>
       </Box>

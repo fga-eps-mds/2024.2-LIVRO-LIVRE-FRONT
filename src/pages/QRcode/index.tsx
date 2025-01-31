@@ -13,7 +13,7 @@ function QRcode() {
     <Box>
         <QRcodeHeader />
         <QRcodeCamera/>
-    s
+        
      <NavBar />
     </Box>
   );

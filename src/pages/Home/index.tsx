@@ -1,4 +1,4 @@
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 import { NavBar } from '../../components/NavBar';
 
@@ -21,7 +21,10 @@ function Home() {
           colorScheme="blue"
           borderRadius="full" 
         >
-        QR
+          <Box as="span" >
+            <Image src="/qrcode.jpeg" boxSize="20px" alt="QR Code" />
+          </Box>
+      
         </Button>
       </Box>
     </Box>

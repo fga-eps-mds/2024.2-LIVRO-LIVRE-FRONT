@@ -4,7 +4,7 @@ const BorrowBookHeader = () => (
   <Box>
     <Box as="header" bg="#D9D9D9" color="black" px={20} py={4}>
       <Flex justify="center" align="center">
-        <Image src="/logo.png" alt="Logo" boxSize="50px" />
+        <Image src="/logo.jpeg" alt="Logo" boxSize="50px" />
       </Flex>
     </Box>
   </Box>

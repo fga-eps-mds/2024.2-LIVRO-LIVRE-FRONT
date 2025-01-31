@@ -13,8 +13,10 @@ import {
 } from "../../../components/ui/dialog";
 import { Button } from "../../../components/ui/button";
 import { useNavigate } from "react-router";
+import axios from "axios"; // Importando axios
 
 interface Book {
+  id: number;
   title: string;
   author: string;
   rating: number;
@@ -27,12 +29,27 @@ const BorrowBook = ({ book }: { book: Book }) => {
   const navigate = useNavigate();
 
   const handleBorrow = async () => {
-    toaster.create({
-      title: `Empréstimo Realizado`,
-      type: "success",
-    });
+    try {
+      // Atualizando o status do livro no backend
+      await axios.put(`http://localhost:3001/books/${book.id}/status`, {
+        status: "NotAvailable",
+      });
 
-    navigate("/perfil");
+      // Exibindo uma notificação de sucesso
+      toaster.create({
+        title: `Empréstimo Realizado`,
+        type: "success",
+      });
+
+      // Redirecionando para a página inicial após o sucesso
+      navigate("/");
+    } catch (error) {
+      // Tratando erro caso a requisição falhe
+      toaster.create({
+        title: `Erro ao realizar empréstimo`,
+        type: "error",
+      });
+    }
   };
 
   return (
