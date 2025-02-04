@@ -13,7 +13,7 @@ import {
 } from "../../../components/ui/dialog";
 import { Button } from "../../../components/ui/button";
 import { useNavigate } from "react-router";
-import axios from "axios"; // Importando axios
+
 
 interface Book {
   id: number;
@@ -25,33 +25,50 @@ interface Book {
   status: string;
 }
 
+
+
+
 const BorrowBook = ({ book }: { book: Book }) => {
   const navigate = useNavigate();
 
   const handleBorrow = async () => {
     try {
-      // Atualizando o status do livro no backend
-      await axios.put(`http://localhost:3001/books/${book.id}/status`, {
-        status: "NotAvailable",
+      const token = localStorage.getItem("@livrolivre:token");
+      if (!token) throw new Error("Usuário não autenticado");
+  
+      const userId = token; 
+  
+      const response = await fetch(`http://localhost:3001/books/${book.id}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status: "NotAvailable",
+          userId, 
+        }),
       });
-
-      // Exibindo uma notificação de sucesso
+  
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar status do livro");
+      }
+  
       toaster.create({
-        title: `Empréstimo Realizado`,
+        title: "Empréstimo Realizado",
         type: "success",
       });
-
-      // Redirecionando para a página inicial após o sucesso
+  
       navigate("/");
     } catch (error) {
-      // Tratando erro caso a requisição falhe
+      console.error(error);
       toaster.create({
-        title: `Erro ao realizar empréstimo`,
+        title: "Erro ao realizar empréstimo",
         type: "error",
       });
     }
   };
-
+  
+  
   return (
     <HStack flexDirection="column" alignItems="center">
       <DialogRoot size="xs" placement="center">
