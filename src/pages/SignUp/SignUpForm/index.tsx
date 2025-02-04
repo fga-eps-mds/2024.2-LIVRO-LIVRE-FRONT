@@ -93,12 +93,14 @@ function SignUpForm() {
             return onlyNumbers.length === 11 || "Telefone inválido.";
         }
     })}
+    
     onChange={(e) => {
-        const formatted = formatPhoneNumber(e.target.value); 
-        e.target.value = formatted; 
-        register('phone').onChange(e); 
-        trigger('phone'); 
-    }}
+      const formatted = formatPhoneNumber(e.target.value); 
+      register('phone').onChange({ 
+          target: { name: 'phone', value: formatted } 
+      }); 
+      trigger('phone'); 
+  }}
 />
           <Field invalid={!!errors.password} errorText={errors.password?.message}>
             <PasswordInput
