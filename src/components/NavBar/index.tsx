@@ -18,7 +18,7 @@ export const NavBar = () => {
   ];
 
   return (
-    <Box position="fixed" width="100%" bottom="0" boxShadow="2xl">
+    <Box position="fixed" overflowX="auto" width="100%" bottom="0" boxShadow="2xl">
       <Center>
         <Flex width={'100%'} justifyContent={'space-between'} padding={'20px'}>
           {tabs.map((tab) => (
