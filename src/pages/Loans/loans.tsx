@@ -114,15 +114,6 @@ function Loans() {
         <>
             <div style={{ maxWidth: '100vw', display: 'stati', flexDirection: 'column', alignItems: 'center' }}>
                 <Header />
-                <FilterSection
-                    selectedFilter={selectedFilter}
-                    setSelectedFilter={setSelectedFilter}
-                    handleFilter={handleFilter}
-                    handleDateFilter={handleDateFilter}
-                    handleStatusFilter={handleStatusFilter}
-                    handleDurationFilter={handleDurationFilter}
-                />
-                <SortButtons handleSort={handleSort} />
                 <EmprestimosList emprestimos={emprestimos} currentPage={currentPage} setCurrentPage={setCurrentPage} />
             </div>
             <NavBar />
