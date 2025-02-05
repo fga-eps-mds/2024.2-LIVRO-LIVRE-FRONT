@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useMemo } from "react"
-import { API_BASE_URL } from "../../config/environment";
+import { API_BASE_URL, API_BOOKS_URL, API_RENTALS_URL } from "../../config/environment";
 import { User } from "../../interfaces/user";
 
 const createApiInstance = (url: string) => {
@@ -22,15 +22,18 @@ const getDefaultErrorUseAPIMessage = (err: any) => {
 
 const useApi = () => {
   const api = useMemo(
-    () =>
-      createApiInstance(API_BASE_URL),
+    () => ({
+      base: createApiInstance(API_BASE_URL),
+      books: createApiInstance(API_BOOKS_URL),
+      rentals: createApiInstance(API_RENTALS_URL),
+    }),
     [],
   );
 
   return {
     getProfile: (token: string | null): Promise<{ data: User }> => {
       return new Promise((resolve) => {
-        api
+        api.base
           .get('/auth/profile', {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -51,7 +54,7 @@ const useApi = () => {
       refreshToken: string;
     } }> => {
       return new Promise((resolve) => {
-        api
+        api.base
           .post('/auth/signup', data)
           .then((res) => resolve(res))
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
@@ -65,7 +68,7 @@ const useApi = () => {
       refreshToken: string;
     } }> => {
       return new Promise((resolve) => {
-        api
+        api.base
           .post('/auth/signin', {
             ...data,
             role: 'user',
@@ -76,7 +79,7 @@ const useApi = () => {
     },
     recoverPassword: (email: string): Promise<{ data: any }> => {
       return new Promise((resolve) => {
-        api
+        api.base
           .post(`/auth/recover-password`, { email })
           .then((res) => resolve(res))
           .catch((err) => resolve(getDefaultErrorUseAPIMessage(err)));
@@ -84,7 +87,7 @@ const useApi = () => {
     },
     changePassword: (password: string, token: string): Promise<{ data: any }> => {
       return new Promise((resolve) => {
-        api
+        api.base
           .post(`/auth/change-password`, { password }, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -105,7 +108,7 @@ const useApi = () => {
       id: string;
     } }> => {
       return new Promise((resolve) => {
-        api
+        api.base
           .put('/users', data, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -119,7 +122,7 @@ const useApi = () => {
       id: string;
     } }> => {
       return new Promise((resolve) => {
-        api
+        api.base
           .delete('/users', {
             headers: {
               Authorization: `Bearer ${token}`,
