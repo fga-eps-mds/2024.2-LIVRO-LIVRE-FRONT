@@ -1,51 +1,71 @@
 import { Box } from '@chakra-ui/react';
-
+import { useAuth } from '../../../hooks/useAuth';
+import React from 'react';
+//import { useAuth } from '../../../hooks/useAuth';
 // Define the Emprestimo type
 type Emprestimo = {
-    livro: string;
+    coverImage: string;
+    title: string;
     dataDeEmprestimo: string;
     dataDeDevolucao: string;
     status: string;
+    userId: string;
 };
 
-export const EmprestimosList = ({ emprestimos, currentPage, setCurrentPage }: { emprestimos: Emprestimo[], currentPage: number, setCurrentPage: React.Dispatch<React.SetStateAction<number>> }) => (
-    <>
-        {emprestimos.length > 0 ? (
-            <Box style={{maxHeight:'50vh'}}>
-                {emprestimos.slice((currentPage - 1) * 2, currentPage * 2).map((emprestimo) => (
-                    <div key={emprestimo.livro} style={{ width:'300px', backgroundColor:'lightgray', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '10px', margin: '10px auto', borderRadius: '8px' }}>
-                        <div style={{width:'100%', display: 'flex'}}>
-                            <div >
-                                <img src="https://marketplace.canva.com/EAE4oJOnMh0/1/0/1003w/canva-capa-de-livro-de-suspense-O7z4yw4a5k8.jpg" alt="Ícone de livro" style={{width:'8vw' , maxWidth: '100px', maxHeight: '100px',minWidth: '60px', minHeight: '65px' }} />
-                            </div>
-                            <div style={{paddingLeft:'20px'}}>
-                                <span style={{ color: 'black', fontSize: '10px', fontWeight: '400', wordWrap: 'break-word', textAlign: 'center', marginTop: '10px' }}>
-                                    {emprestimo.livro}
-                                </span>
-                                <div style={{ color: 'black', fontSize: '10px', fontWeight: '400', wordWrap: 'break-word', marginTop: '10px' }}>
-                                    Data de Empréstimo: {new Date(emprestimo.dataDeEmprestimo).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
-                                    <br />
-                                    Data de Devolução: {new Date(emprestimo.dataDeDevolucao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
+
+
+
+export const EmprestimosList = ({ emprestimos, currentPage, setCurrentPage }: { emprestimos: Emprestimo[], currentPage: number, setCurrentPage: React.Dispatch<React.SetStateAction<number>> }) => {
+    const { getUserId } = useAuth();
+    const [userId, setUserId] = React.useState<string | null>(null);
+
+    React.useEffect(() => {
+        const fetchUserId = async () => {
+            const id = await getUserId();
+            setUserId(id);
+        };
+        fetchUserId();
+    }, []);
+    const filteredEmprestimos = emprestimos.filter(emprestimo => emprestimo.userId ===userId);
+    return (
+        <>
+            {filteredEmprestimos.length > 0 ? (
+                <Box style={{ maxHeight: '50vh' }}>
+                    {filteredEmprestimos.slice((currentPage - 1) * 2, currentPage * 2).map((emprestimo) => (
+                        
+                        <div key={emprestimo.title} style={{ width: '300px', backgroundColor: 'lightgray', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '10px', margin: '10px auto', borderRadius: '8px' }}>
+                            <div style={{ width: '100%', display: 'flex' }}>
+                                <div>
+                                    <img src={emprestimo.coverImage} alt="Ícone de livro" style={{ width: '8vw', maxWidth: '100px', maxHeight: '100px', minWidth: '60px', minHeight: '65px' }} />
                                 </div>
-                                <div style={{ color: 'black', fontSize: '10px', fontWeight: '400', wordWrap: 'break-word', marginTop: '10px' }}>
-                                    Status: {emprestimo.status}
+                                <div style={{ paddingLeft: '20px' }}>
+                                    <span style={{ color: 'black', fontSize: '10px', fontWeight: '400', wordWrap: 'break-word', textAlign: 'center', marginTop: '10px' }}>
+                                        {emprestimo.title}
+                                    </span>
+                                    <div style={{ color: 'black', fontSize: '10px', fontWeight: '400', wordWrap: 'break-word', marginTop: '10px' }}>
+                                        Data de Empréstimo: {new Date(emprestimo.dataDeEmprestimo).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
+                                        <br />
+                                        Data de Devolução: {new Date(emprestimo.dataDeDevolucao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
+                                    </div>
+                                    <div style={{ color: 'black', fontSize: '10px', fontWeight: '400', wordWrap: 'break-word', marginTop: '10px' }}>
+                                        Status: {emprestimo.status}
+                                    </div>
                                 </div>
                             </div>
-                            
                         </div>
-                    </div>
-                ))}
-                {emprestimos.length > 2 && (
-                    <CustomPagination emprestimos={emprestimos} currentPage={currentPage} setCurrentPage={setCurrentPage} />
-                )}
-            </Box>
-        ) : (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', width: '90%', maxWidth: '500px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'red', fontSize: '30px' }}>
-                Nenhum empréstimo encontrado.
-            </div>
-        )}
-    </>
-);
+                    ))}
+                    {filteredEmprestimos.length > 2 && (
+                        <CustomPagination emprestimos={filteredEmprestimos} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                    )}
+                </Box>
+            ) : (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', width: '90%', maxWidth: '500px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'red', fontSize: '30px' }}>
+                    Nenhum empréstimo encontrado.
+                </div>
+            )}
+        </>
+    );
+};
 
 const CustomPagination = ({ emprestimos, currentPage, setCurrentPage }: { emprestimos: Emprestimo[], currentPage: number, setCurrentPage: React.Dispatch<React.SetStateAction<number>> }) => (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>

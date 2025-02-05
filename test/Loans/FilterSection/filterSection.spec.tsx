@@ -46,8 +46,8 @@ describe('FilterSection', () => {
 
     it('should call handleStatusFilter on status filter change', () => {
         const { getByText } = renderComponent('status');
-        fireEvent.change(getByText('Todos').closest('select')!, { target: { value: 'Em posse' } });
-        expect(handleStatusFilter).toHaveBeenCalledWith('Em posse');
+        fireEvent.change(getByText('Todos').closest('select')!, { target: { value: 'Available' } });
+        expect(handleStatusFilter).toHaveBeenCalledWith('Available');
     });
 
     it('should call handleDurationFilter on duration filter change', () => {
@@ -55,8 +55,5 @@ describe('FilterSection', () => {
         fireEvent.change(getByText('Selecione').closest('select')!, { target: { value: 'short' } });
         expect(handleDurationFilter).toHaveBeenCalledWith('short');
     });
-
-
-
 
 });

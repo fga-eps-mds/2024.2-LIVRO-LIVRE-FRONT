@@ -39,6 +39,7 @@ type AuthContextType = {
   changePassword: (password: string, mailToken: string) => Promise<boolean>;
   getProfile: () => Promise<User>;
   deleteProfile: () => Promise<boolean>;
+  getUserId: () => Promise<string | null>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -168,6 +169,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(null);
   }
 
+  async function getUserId(): Promise<string> {
+    const profile = await getProfile();
+    return profile.id;
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -181,6 +187,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         changePassword,
         getProfile,
         deleteProfile,
+        getUserId,
       }}
     >
       {children}

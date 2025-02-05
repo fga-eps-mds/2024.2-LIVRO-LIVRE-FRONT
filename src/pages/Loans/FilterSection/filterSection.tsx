@@ -27,8 +27,8 @@ const StatusFilter = ({ handleStatusFilter }: { handleStatusFilter: (statusValue
         onChange={(e) => handleStatusFilter(e.target.value)}
     >
         <option value="Todos">Todos</option>
-        <option value="Em posse">Pendente</option>
-        <option value="Devolvido">Devolvido</option>
+        <option value="Available">Pendente</option>
+        <option value="NotAvailable">Devolvido</option>
     </select>
 );
 

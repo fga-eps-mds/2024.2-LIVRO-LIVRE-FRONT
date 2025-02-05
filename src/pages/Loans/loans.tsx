@@ -7,8 +7,11 @@ import SortButtons from './SortButtons/sortButtons';
 import EmprestimosList from './EmprestimosList/emprestimoslist';
 
 interface Emprestimo {
+    coverImage: string ;
+    title: string;
     status: string;
     livro: string;
+    userId: string;
     dataDeEmprestimo: string;
     dataDeDevolucao: string;
 }
@@ -20,7 +23,7 @@ function Loans() {
 
     const fetchEmprestimos = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/emprestimos?limit=20');
+            const response = await axios.get('http://localhost:3001/books/search');
             setEmprestimos(response.data);
         } catch (error) {
             console.error('Erro ao buscar os dados:', error);
@@ -57,7 +60,7 @@ function Loans() {
 
     const handleDateFilter = async (startDate: Date, endDate: Date) => {
         try {
-            const response = await axios.get('http://localhost:3001/emprestimos?limit=20');
+            const response = await axios.get('http://localhost:3001/books/search');
             const filteredEmprestimos = response.data.filter((emprestimo: Emprestimo) => {
                 const emprestimoDate = new Date(emprestimo.dataDeEmprestimo);
                 return emprestimoDate >= startDate && emprestimoDate <= endDate;
@@ -70,7 +73,7 @@ function Loans() {
 
     const handleStatusFilter = async (statusValue: string) => {
         try {
-            const response = await axios.get('http://localhost:3001/emprestimos?limit=20');
+            const response = await axios.get('http://localhost:3001/books/search');
             const filteredEmprestimos = statusValue === 'Todos' ? response.data : response.data.filter((emprestimo: Emprestimo) => emprestimo.status === statusValue);
             setEmprestimos(filteredEmprestimos);
         } catch (error) {
@@ -80,7 +83,7 @@ function Loans() {
 
     const handleDurationFilter = async (duration: string) => {
         try {
-            const response = await axios.get('http://localhost:3001/emprestimos?limit=20');
+            const response = await axios.get('http://localhost:3001/books/search');
             const filteredEmprestimos = response.data.filter((emprestimo: Emprestimo) => {
                 const duracao = (new Date(emprestimo.dataDeDevolucao).getTime() - new Date(emprestimo.dataDeEmprestimo).getTime()) / (24 * 60 * 60 * 1000); // duration in days
                 if (duration === 'short') {
