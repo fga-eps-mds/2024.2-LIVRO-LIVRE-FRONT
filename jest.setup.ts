@@ -8,6 +8,7 @@ if (
   globalThis.TextEncoder = utils.TextEncoder;
   globalThis.TextDecoder = utils.TextDecoder;
   globalThis.Uint8Array = Uint8Array;
+
 }
 
 global.structuredClone = (val) => JSON.parse(JSON.stringify(val))
