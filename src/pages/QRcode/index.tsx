@@ -1,4 +1,3 @@
-
 import { NavBar } from '../../components/NavBar';
 import { Box } from "@chakra-ui/react";
 import QRcodeHeader from './QRcodeHeader';
