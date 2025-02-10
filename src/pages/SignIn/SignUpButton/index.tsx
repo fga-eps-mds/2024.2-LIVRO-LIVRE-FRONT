@@ -10,7 +10,7 @@ function SignUpButton() {
           textAlign={'center'}
           color={'blue.100'}
         >
-          Não possuí uma conta? <ChakraLink color={'green.100'}><Link to='/cadastro'>Faça seu cadastro aqui</Link></ChakraLink>
+          Criar conta <ChakraLink color={'green.100'}><Link to='/cadastro'>Faça seu cadastro aqui</Link></ChakraLink>
         </Text>
       </Stack>
     </Center>
