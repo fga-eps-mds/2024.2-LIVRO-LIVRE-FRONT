@@ -35,7 +35,7 @@ function BookList() {
 
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>{error}</p>;
-  if (!books.length) return <p>Nenhum livro encontrado.</p>;
+  if (!books.length) return <p>Nenhum Livro encontrado.</p>;
 
   return (
     <Box p={4}>
