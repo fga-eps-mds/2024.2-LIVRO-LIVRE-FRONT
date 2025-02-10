@@ -6,6 +6,7 @@ import BorrowBookLivro from './BorrowBookLivro';
 import BorrowButton from './BorrowButton';
 import { useParams } from 'react-router';
 import axios from 'axios';
+import BackButton from './BackButton';
 
 function BorrowBook() {
   const { id } = useParams<{ id: string }>(); 
@@ -35,6 +36,7 @@ function BorrowBook() {
   return (
     <Box>
       <BorrowBookHeader />
+      <BackButton />
       <Grid templateColumns="1fr" gap={8} justifyItems="center" alignItems="center" p={4}>
         <BorrowBookLivro book={book} />
         <BorrowButton book={book} />

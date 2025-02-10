@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
 
+
 if (
   typeof globalThis.TextEncoder === "undefined" ||
   typeof globalThis.TextDecoder === "undefined"
@@ -11,4 +12,7 @@ if (
 
 }
 
-global.structuredClone = (val) => JSON.parse(JSON.stringify(val))
+global.structuredClone = (val: string) => {
+  return val === null || typeof val !== 'object' ? val : JSON.parse(JSON.stringify(val));
+};
+

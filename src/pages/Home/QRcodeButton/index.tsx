@@ -17,6 +17,7 @@ function QRbutton() {
         variant="outline"
         colorScheme="blue"
         borderRadius="full"
+        bg="Green"
       >
         <Image src="/qrcode.jpeg" boxSize="20px" alt="QR Code" />
       </Button>

@@ -28,7 +28,7 @@ interface Book {
 
 
 
-const BorrowBook = ({ book }: { book: Book }) => {
+const BorrowBookButton = ({ book }: { book: Book }) => {
   const navigate = useNavigate();
 
   const handleBorrow = async () => {
@@ -109,4 +109,4 @@ const BorrowBook = ({ book }: { book: Book }) => {
   );
 };
 
-export default BorrowBook;
+export default BorrowBookButton;
